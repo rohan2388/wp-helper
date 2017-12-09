@@ -1,5 +1,5 @@
 <?php
-namespace RD\Template;
+namespace RD\WP;
 /**
  * Helper functions
  *
