@@ -3,6 +3,7 @@
     "description": "Helper class for wordpress theme (RDH).",
 	"keywords": ["rd", "helper"],
     "type": "library",
+	"license": "MIT",
     "authors": [
         {
             "name": "Rohan Das",
