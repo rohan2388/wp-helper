@@ -6,10 +6,10 @@ namespace RD\WP;
  * Define constants
  */
 
-if ( ! defined( RDWP_RDH_TEMPLATES ) ) {
+if ( ! \defined( 'RDWP_RDH_TEMPLATES' ) && \function_exists( 'get_template_directory' ) ) {
     define( "RDWP_RDH_TEMPLATES", get_template_directory() . '/templates' );
 }
-
+if ( ! \defined('RDWP_RDH_TEMPLATES') ) return;
 
 
 
@@ -24,12 +24,12 @@ if ( ! defined( RDWP_RDH_TEMPLATES ) ) {
  *
  *
  */
-class RDH {
+class Helper {
 
     /**
      * Stringify css properties
      */
-    static private function css_stringify( $prop, $value, $pattern = "%s: %s;" ) {
+    private static function css_stringify( $prop, $value, $pattern = "%s: %s;" ) {
         $css = '';
         if ( $value ) {
         	if (is_array($value)){
@@ -46,7 +46,7 @@ class RDH {
     /**
      * Return html ready css style
      */
-    static function inline_styles( $styles = array() ){
+    public static function inline_styles( $styles = array() ){
     	if( empty( $styles ) || ! is_array( $styles ) )
     		return '';
     	$output = '';
@@ -74,8 +74,8 @@ class RDH {
     /**
      * Merge array of classes to string
      */
-    static function classes( $classes ) {
-        return implode( " ", $classes );
+    public static function classes( $classes, $prepend = '' ) {
+        return $prepend . ' ' . implode( " ", $classes );
     }
 
     /**
@@ -84,7 +84,7 @@ class RDH {
      * @param   array   $args   Args to be available on template
      * @return  string
      */
-    static function template( $file, $args = array() ) {
+    public static function template( $file, $args = array() ) {
         if(is_array($args))
     		extract($args);
     	ob_start();
@@ -95,32 +95,6 @@ class RDH {
     	return ob_get_clean();
     }
 
-    /**
-     * Return theme option
-     * Carbon fields
-     * @param   string  $key    Theme option key
-     * @return  string|boolean
-     */
-    static function cb_theme_option( $key ) {
-        if ( function_exists( 'carbon_get_theme_option' ) ) {
-            return carbon_get_theme_option( $key );
-        }
-        return false;
-    }
-
-    /**
-     * Get post meta
-     * Carbon field
-     * @param   string      $key        Theme option key
-     * @param   integer     $post_id    Post ID
-     * @return  string|boolean
-     */
-    static function cf_post_meta( $key, $post_id = null ) {
-        if ( ! $post_id ) {
-            $post_id = get_the_ID();
-        }
-        return carbon_get_post_meta( $post_id, $key);
-    }
 
     /**
      * Generate 2x img tag from attachment
@@ -128,7 +102,7 @@ class RDH {
      * @param   string      $size   Default: full
      * @return  string
      */
-    static function img2x( $id, $size = 'full') {
+    public static function img2x( $id, $size = 'full') {
         $URL = wp_get_attachment_image_src( $id, $size );
         if ( $URL ) {
             $tag = sprintf( '<img src="%1$s" srcset="%1$s 2x" width="%2$s" height="%3$s">', $URL[0], $URL[1]/2, $URL[2]/2);
@@ -145,9 +119,9 @@ class RDH {
      * @param   array   $variables  array of variables that needs to available
      * @return  string
      */
-    static function echo2string( $__function, $__variables = array() ) {
+    public static function echo2string( $__function, $__variables = array() ) {
         ob_start();
-        if ( is_callable( $__function ) ) {
+        if ( is_callable( $__function ) ) {            
             $__function( $__variables );
         }
         return ob_get_clean();
@@ -160,7 +134,7 @@ class RDH {
      * @param   mixed   $insert
      * @return  array
      */
-    static function array_insert(&$array, $position, $insert) {
+    public static function array_insert(&$array, $position, $insert) {
         if (is_int($position)) {
             array_splice($array, $position, 0, $insert);
         } else {
