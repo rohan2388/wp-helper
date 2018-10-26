@@ -1,21 +1,21 @@
 language: php
 php:
-	- 7.2.6
+  - 7.2.6
 install:
-	- travis_retry composer self-update
-	- travis_retry composer install --no-interaction --no-suggest
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --no-suggest
 script:
-	- composer test -- --coverage-clover=coverage.xml
+  - composer test -- --coverage-clover=coverage.xml
 
 after_success:
-	- bash <(curl -s https://codecov.io/bash) -t 3095822c-e93b-4d11-9400-58bfd6801cb0
+  - bash <(curl -s https://codecov.io/bash) -t 3095822c-e93b-4d11-9400-58bfd6801cb0
 
 branches:
-	only:
-		- master
-		- dev
+  only:
+    - master
+    - dev
 
 # You can delete the cache using travis-ci web interface
 cache:
-	directories:
-		- $HOME/.composer/cache
+  directories:
+    - $HOME/.composer/cache
