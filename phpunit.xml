@@ -8,7 +8,6 @@
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
         processIsolation="false"
-		testdox="true"
         stopOnFailure="false">
     <testsuites>
         <testsuite name="Helper Test Suite">
