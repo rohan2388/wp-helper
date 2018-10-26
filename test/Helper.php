@@ -97,7 +97,7 @@ final class HelperTest extends TestCase {
 	public function array_insert(){
 		$arr = ['Before', 'After'];
 		$this->assertEquals(
-			['Before', 'OKx', 'After'],
+			['Before', 'OK', 'After'],
 			Helper::array_insert( $arr, 1, 'OK' )
 		);
 	}
